@@ -108,9 +108,172 @@ Weather or not to include comments in the final js file
 "noImplicitAny": true,  /* Enable error reporting for expressions and declarations with an implied 'any' type. */
 ```
 
+### Sample Typescript Code
+```
+// Function in typescript
+function greet(name:string):string {
+    return `Hello ${name}`
+}
+console.log(greet("Anurag"))
+
+// Function with return
+function sum(a:number,b:number):number {
+    return a+b
+}
+console.log(sum(2,5))
+```
+### Type inference
+
+```
+function isLegal(age: number) {
+    if (age > 18) {
+        return true;
+    } else {
+        return false
+    }
+}
+
+console.log(isLegal(2));
+```
+### Function Calling another Function
+```
+function delayedCall(fn: () => void) {
+    setTimeout(fn, 1000);
+}
+
+delayedCall(function() {
+    console.log("hi there");
+})
+```
+
+### Typescript Interfaces
+How can you assign types to objects? For example, a user object that looks like this - 
+```
+const user = {
+	firstName: "harkirat",
+	lastName: "singh",
+	email: "email@gmail.com".
+	age: 21,
+}
+```
+To assign a type to the user object, you can use interfaces
+```
+interface User {
+	firstName: string;
+	lastName: string;
+	email: string;
+	age: number;
+}
+```
+### Assignment #1 - Create a function isLegal that returns true or false if a user is above 18. It takes a user as an input.
+```
+interface User {
+    name:string;
+    email:string;
+    age:number
+}
+function isLegal(user:User):boolean {
+    return user.age>18
+}
+```
+### TODO Assignment #2 - Create a React component that takes todos as an input and renders them
+
+### Implementing interfaces
+Interfaces have another special property. You can implement interfaces as a class.
+Let’s say you have an personinterface - 
+```
+interface Person {
+    name: string;
+    age: number;
+    greet(phrase: string): void;
+}
+```
+You can create a class which implements this interface.
+```
+class Employee implements Person {
+    name: string;
+    age: number;
+
+    constructor(n: string, a: number) {
+        this.name = n;
+        this.age = a;
+    }
+
+    greet(phrase: string) {
+        console.log(`${phrase} ${this.name}`);
+    }
+}
+```
+### types
+Very similar to interfaces , types let you aggregate data together.But they let you do a few other things.
+```
+type User = {
+	firstName: string;
+	lastName: string;
+	age: number
+}
+```
+- 1. Unions
+Let’s say you want to print the id of a user, which can be a number or a string.
+You can not do this using interfaces
+```
+type StringOrNumber = string | number;
+function Id(id:StringOrNumber) {
+    console.log( `Id: ${id}`)
+}
+Id(25)
+Id("Hello")
+```
+- 2. Intersection
+What if you want to create a type that has every property of multiple types/ interfaces
+You can not do this using interfaces
+```
+type Employee= {
+    name:string;
+    startDate:Date;
+}
+type Manager = {
+    name:string;
+    department:string;
+}
+
+type TeamLead = Employee & Manager;
+const teamLead:TeamLead = {
+    name:"Anurag",
+    startDate:new Date(),
+    department:"IT"
+}s
+```
+### Arrays in TS
+If you want to access arrays in typescript, it’s as simple as adding a [] annotation next to the type.
+- Example 1: Given an array of positive integers as input, return the maximum value in the array
+```
+function maxValue(arr:number[]):number {
+    let max = 0;
+    for (let i=0;i<arr.length;i++) {
+        if (arr[i]> max) {
+            max = arr[i]
+        }
+    }
+    return max
+}
+
+console.log(maxValue([1,2,3,4,5,4,3,2,4,5,6,7]))
+```
+
+- Example 2: Given a list of users, filter out the users that are legal (greater than 18 years of age)
+```
+interface User {
+	firstName: string;
+	lastName: string;
+	age: number;
+}
+```
 
 
 
+
+https://angularexperts.io/blog/advanced-typescript?ref=dailydev 
 ### Advanced Typescript features
 
 - Union and intersection types
