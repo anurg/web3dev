@@ -360,7 +360,87 @@ app.get("/', (req, res) => {
 Let’s say you have a function that needs to return the first element of an array. Array can be of type either string or integer.
 How would you solve this problem?
 
+```
+function getFirstElement(arr:(string|number)[]) {
+    return arr[0];
+}
 
+console.log(getFirstElement([1,2,3]))
+```
+What is the problem in this approach?
+User can send different types of values in inputs, without any type errors
+```
+console.log(getFirstElement([1,2,`3`]))
+```
+
+Typescript isn’t able to infer the right type of the return type
+```
+const el = getFirstElement(["harkiratSingh", "ramanSingh"]);
+console.log(el.toLowerCase())
+```
+Typescript shows error
+```
+Property 'toLowerCase' does not exist on type 'string | number'.
+  Property 'toLowerCase' does not exist on type 'number'.ts(2339)
+any
+```
+
+### Solution - Generics
+Generics enable you to create components that work with any data type while still providing compile-time type safety.
+```
+function Identity<T>(arg:T):T {
+    return arg
+}
+
+console.log(Identity<string>("Hello"))
+console.log(Identity<number>(35))
+```
+- Solution to original problem
+```
+function getFirstElement<T>(arr:T[]):T {
+    return arr[0];
+}
+
+console.log(getFirstElement<number>([1,2,"3"])) //This line will give error
+const el = getFirstElement<string>(["harkiratSingh", "ramanSingh"]);
+console.log(el.toLowerCase())  //Now TS is able to infer type
+```
+### Exporting and Importing Modules
+
+TypeScript follows the ES6 module system, using import and export statements to share code between different files. 
+
+### 1. Constant exports
+- math.ts
+```
+export function add(x: number, y: number): number {
+    return x + y;
+}
+
+export function subtract(x: number, y: number): number {
+    return x - y;
+}
+```
+- main.ts
+```
+import { add, subtract } from "./math"
+
+add(1, 2)
+```
+### 2. Default exports
+```
+export default class Calculator {
+    add(x: number, y: number): number {
+        return x + y;
+    }
+}
+```
+- calculator.ts 
+ ```
+import Calculator from './Calculator';
+
+const calc = new Calculator();
+console.log(calc.add(10, 5));
+```
 
 https://angularexperts.io/blog/advanced-typescript?ref=dailydev 
 ### Advanced Typescript features
