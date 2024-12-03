@@ -264,12 +264,101 @@ console.log(maxValue([1,2,3,4,5,4,3,2,4,5,6,7]))
 - Example 2: Given a list of users, filter out the users that are legal (greater than 18 years of age)
 ```
 interface User {
-	firstName: string;
-	lastName: string;
-	age: number;
+    name:string;
+    age:number;
 }
+function fileteredUsers(users:User[]):User[] {
+   return users.filter(u=>u.age>=18)
+}
+
+const users: User[] = [
+    {
+        name:"Anurag",
+        age:50
+    },
+    {
+        name:"Harry",
+        age:17
+    }
+]
+
+console.log(fileteredUsers(users))
+```
+### Enums
+
+Enums (short for enumerations) in TypeScript are a feature that allows you to define a set of named constants.
+The concept behind an enumeration is to create a human-readable way to represent a set of constant values, which might otherwise be represented as numbers or strings.
+
+```
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+function doSomething(keyPressed: Direction) {
+	// do something.
+}
+
+doSomething(Direction.Up)
+console.log(Direction.Up)
+```
+The final value stored at runtime is still a number (0, 1, 2, 3). 
+
+### How to change values?
+```
+enum Direction {
+    Up = 1,
+    Down, // becomes 2 by default
+    Left, // becomes 3
+    Right // becomes 4
+}
+
+function doSomething(keyPressed: Direction) {
+	// do something.
+}
+
+doSomething(Direction.Down)
+console.log(Direction.Down)
 ```
 
+### Can also be strings
+```
+enum Direction {
+    Up = "UP",
+    Down = "Down",
+    Left = "Left",
+    Right = 'Right'
+}
+
+function doSomething(keyPressed: Direction) {
+	// do something.
+}
+
+doSomething(Direction.Down)
+console.log(Direction.Down)
+```
+### Common usecase in express
+```
+enum ResponseStatus {
+    Success = 200,
+    NotFound = 404,
+    Error = 500
+}
+
+app.get("/', (req, res) => {
+    if (!req.query.userId) {
+			res.status(ResponseStatus.Error).json({})
+    }
+    // and so on...
+		res.status(ResponseStatus.Success).json({});
+})
+```
+### Generics
+- 1. Problem Statement
+Let’s say you have a function that needs to return the first element of an array. Array can be of type either string or integer.
+How would you solve this problem?
 
 
 
