@@ -442,14 +442,3 @@ const calc = new Calculator();
 console.log(calc.add(10, 5));
 ```
 
-https://angularexperts.io/blog/advanced-typescript?ref=dailydev 
-### Advanced Typescript features
-
-- Union and intersection types
-- Keyof
-- Typeof
-- Conditional types
-- Utility types
-- Infer type
-- Mapped types
-

@@ -153,3 +153,18 @@ app.put("/user", (req, res) => {
 
 app.listen(3000);
 ```
+
+### Keyof
+Now that we know the union type. Let’s have a look at the keyof operator. The keyof operator takes the keys of an
+interface or an object and produces a union type
+```
+interface MovieCharacter {
+  firstname: string;
+  name: string;
+  movie: string;
+}
+
+type characterProps = keyof MovieCharacter;
+```
+Even if MovieCharacter interface is changed, the rest of the code need not to be changed as by using
+keyof characterProps remain valid.
