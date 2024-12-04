@@ -56,3 +56,153 @@ Change `outDir` to `dist`
 ```
 npx prisma init
 ```
+
+Next steps:
+- 1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+- 2. Set the provider of the datasource block in schema.prisma to match your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
+- 3. Run prisma db pull to turn your database schema into a Prisma schema.
+```
+npx prisma db pull
+```
+- 4. Run prisma generate to generate the Prisma Client. You can then start querying your database.
+```
+npx prisma generate
+```
+
+### Selecting your database
+Prisma lets you chose between a few databases (MySQL, Postgres, Mongo)
+You can update prisma/schema.prisma  to setup what database you want to use. 
+
+### Defining your data model
+Prisma expects you to define the shape of your data in the schema.prisma  file
+If your final app will have a Users table, it would look like this in the schema.prisma  file
+```
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  authorId  Int?
+  User      User?   @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  Post  Post[]
+}
+
+```
+
+### Generate migrations
+You have created a single schema file. You haven’t yet run the CREATE TABLE  commands. To run those and create migration files , run 
+```
+npx prisma migrate dev --name Initialize the schema
+```
+
+### Generating the prisma client
+- What is a client?
+Client represents all the functions that convert 
+```
+User.create({email: "harkirat@gmail.com"})
+```
+into
+```
+INSERT INTO users VALUES ...
+```
+Once you’ve created the prisma/schema.prisma , you can generate these clients  that you can use in your Node.js app
+
+### How to generate the client?
+```
+npx prisma generate
+```
+This generates a new client  for you.
+
+### Start Prisma Studio
+To view Data in the Database, you can use prisma studio
+```
+npx prisma studio
+```
+
+### Write a function that let’s you insert data in the Users  table.
+```
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+interface User {
+    id:number;
+    email:string;
+    name:string;
+}
+async function insertUser(user:User) {
+    await prisma.user.create({
+        data:{
+            id:user.id,
+            email:user.email,
+            name:user.name
+        }
+    })
+}
+const u1:User = {
+    id:1,
+    email:"anurg@yahoo.com",
+    name:"Anurag"
+}
+const u2:User = {
+    id:2,
+    email:"test@yahoo.com",
+    name:"Test"
+}
+insertUser(u1)
+insertUser(u2)
+```
+### Write a function that let’s you update data in the Users  table.
+```
+async function updateUser(user:User, newEmail:string) {
+    const res = await prisma.user.update({
+        where:{
+            id:user.id
+        },
+        data:{
+            email:newEmail
+        }
+    })
+    console.log(res)
+}
+updateUser(u1,"anurg@yahoo.com")
+```
+
+### Write a function that let’s you fetch the details of a user given their email
+```
+async function getUser(userId:number) {
+    const res = await prisma.user.findUnique({
+        where:{
+            id:userId
+        }
+    })
+    console.log(res?.email)
+}
+getUser(1)
+getUser(2)
+```
+
+### Relationships.
+Prisma let’s you define relationships  to relate tables with each other.
+1. Types of relationships
+- One to One
+- One to Many
+- Many to One
+- Many to Many
+ 
+
+ 
