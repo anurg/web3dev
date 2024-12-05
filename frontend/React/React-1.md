@@ -1,6 +1,20 @@
 ### React Notes
 https://thenewstack.io/mastering-progressive-hydration-for-enhanced-web-performance/?ref=dailydev
 
+### React
+The truly magical thing about React is that we don't have to worry about keeping our state (held in JavaScript) 
+and our UI (in the DOM?) in sync.
+With React, we're describing what we want the UI to be, based on the current application state.
+React takes those descriptions and makes it real.
+
+### What is JSX?
+Instead of writing React.createElement, we use an HTML-like syntax to create React elements.
+
+Why do we use JSX? It might not be obvious from this tiny example, but as our chunk of markup grows, it becomes increasingly clear that JSX is just easier to read.
+
+With React 17, the React team introduced a new “JSX transformer”, used by Babel and other compilers. Essentially, it automatically injects the import during the build process.
+
+
 ### 1. Bootstrapping a local React Project
 
 There are various ways to bootstrap a react project locally. Vite is the most widely used one today. 
