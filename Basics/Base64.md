@@ -30,3 +30,9 @@ console.log(encode)
 const decode = Buffer.from(encode,'base64').toString()
 console.log(decode)
 ```
+
+### Typescript code to convert String to binary
+```
+const arr = Array.from("Hello").map(x=>x.charCodeAt(0).toString(2).padStart(8,'0')).join(' ');
+console.log(arr)
+```
