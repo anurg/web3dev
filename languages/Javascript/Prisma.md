@@ -231,8 +231,60 @@ model Todo {
 npx prisma migrate dev --name relationship
 npx prisma generate
 ```
+### Write a function to create Post for a User
+```
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 
+async function createPost(title:string,content:string,published:boolean,authorId:number) {
+    await prisma.post.create({
+        data:{
+            title,
+            content,
+            published,
+            authorId
+        }
+    })
+}
+
+createPost("Hello World","Hello World, Prisma Here", true,1)
+```
+### Write a function to get all the todos for a user.
+```
+async function getPosts(authorId:number) {
+   const posts = await prisma.post.findMany({
+        where:{
+            authorId
+        }
+    })
+    console.log(posts)
+}
+ getPosts(1);
+
+```
+
+### getTodosAndUserDetails (Does/should it use joins?)
+- Write a function that gives you the todo details of a user along with the user details
+```
+async function getPostsWithAuthor(authorId:number) {
+   const posts= await prisma.post.findMany({
+        where:{
+            authorId:authorId
+        },
+        select: {
+            author:true,
+            title:true,
+            content:true,
+            published:true,
+            
+        }
+    })
+    console.log(posts)
+ }
+
+ console.log(getPostsWithAuthor(1))
+```
 
 ### Expressify it - Assignment for this week
     Try creating a todo application that let’s a user signup, put todos and fetch todos. 
