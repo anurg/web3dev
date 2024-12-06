@@ -285,6 +285,33 @@ async function getPostsWithAuthor(authorId:number) {
 
  console.log(getPostsWithAuthor(1))
 ```
+### Select only Name from User table and Post Id in descending order
+```
+ async function getPostsWithAuthor(authorId:number) {
+   const posts= await prisma.post.findMany({
+        where:{
+            authorId:authorId
+        },
+        select: {
+            author:{
+                select:{
+                    name:true
+                }
+            },
+            title:true,
+            content:true,
+            published:true,
+            id:true
+        },
+        orderBy:{
+            id:'desc'
+        }
+    })
+    console.log(posts)
+ }
+
+ console.log(getPostsWithAuthor(1))
+```
 
 ### Expressify it - Assignment for this week
     Try creating a todo application that let’s a user signup, put todos and fetch todos. 
