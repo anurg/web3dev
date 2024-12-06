@@ -205,4 +205,39 @@ Prisma let’s you define relationships  to relate tables with each other.
 - Many to Many
  
 
- 
+ For the TODO app, there is a one to many  relationship
+ ```
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  todos      Todo[]
+}
+
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  done        Boolean @default(false)
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
+}
+ ```
+
+-  Update the database  and the prisma client 
+```
+npx prisma migrate dev --name relationship
+npx prisma generate
+```
+
+
+
+### Expressify it - Assignment for this week
+    Try creating a todo application that let’s a user signup, put todos and fetch todos. 
+Use 
+- Typescript as the language
+- Prisma as the ORM
+- Postgres as the database
+- Zod as validation library
