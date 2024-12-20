@@ -139,3 +139,40 @@ async function getUserDetails() {
 - Frontend for Signup
 - Backend for Singup
 - Add Prisma & Postgress DB
+
+### Frontend for Signup
+- Navigation from a link within Nextjs (Prefferred Approach)
+```
+import Link from "next/link"
+
+
+export default function Home() {
+  return (
+    <div className="w-screen h-screen flex flex-col items-center justify-center text-lg border" >
+      <div className="border text-lg font-bold">ToDo App</div>
+      <Link href="/signup">SignUp</Link>
+      <Link href="/signin">SignIn</Link>
+    </div>
+  );
+}
+
+```
+- Using Client side approach (Not prefferred) 
+```
+"use client"
+import { useRouter } from "next/navigation";
+
+
+export default function Home() {
+  const router = useRouter();
+  return (
+    <div className="w-screen h-screen flex flex-col items-center justify-center text-lg border" >
+      <div className="border text-lg font-bold">ToDo App</div>
+      <button onClick={()=>{
+        router.push("/signup")
+      }}>Signup</button>
+    </div>
+  );
+}
+```
+
