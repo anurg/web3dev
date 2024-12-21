@@ -95,6 +95,18 @@ export default function Loading() {
     </div>
   }
 ```
+### Function delay using promise
+```
+  await new Promise(resolve=>{
+        setTimeout(resolve,5000)
+    })
+```
+```
+   function delay(seconds:number):Promise<void> {
+        return new Promise(resolve=>setTimeout(resolve,seconds*1000))
+    }
+    await delay(5)
+```
 
 ### Introducing api routes in Next.js
 
